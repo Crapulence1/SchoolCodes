@@ -37,6 +37,7 @@ public class PostfixEval {
                 case "^":
                     a = (double) stack.pop();
                     b = (double) stack.pop();
+                    if(b < 0) throw new Exception();
                     stack.push(Math.pow(b, a));
                     break;
                 default:

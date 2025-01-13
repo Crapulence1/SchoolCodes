@@ -2,16 +2,31 @@ package stackStuff;
 
 import java.util.Arrays;
 import java.util.Scanner;
-
+import static stackStuff.PostfixEval.postfix;
 public class InfixToPost {
     public static void main(String[] args) throws Exception {
         Scanner in = new Scanner(System.in);
         String[] input = in.nextLine().split(" ");
         try {
-            print(InfixConvert(input));
+            String[] answer = InfixConvert(input);
+            double eval = postfix(answer);
+            print(answer);
+            System.out.println(eval);
+        }
+        catch(ArithmeticException e){
+            System.out.println("Failed: Divided by zero");
+            print(input);
+        }
+        catch (NullPointerException e){
+            System.out.println("Failed: Incorrect number of parentheses");
+            print(input);
         }
         catch(NumberFormatException e){
             System.out.println("Failed: Improper formatting");
+            print(input);
+        }
+        catch(Exception e){
+            System.out.println("Failed: Negative base with exponentiation");
             print(input);
             System.out.println(e.getMessage());
 
@@ -53,7 +68,10 @@ public class InfixToPost {
             if(table.isOutputable((String) stack.peek())) { //checks if the top of the sta k is outputable
                 ans[ansCount++] = (String) stack.pop(); //adds it to the answer if it is
             } else {
-                stack.pop(); //pop and get rid of it if it isn't
+
+                if(stack.pop().equals("(")){ //if we have to many open parentheses throw error, else just pop
+                    throw new NullPointerException();
+                }
             }
         }
         return ans; //gets rid of all elements in stack and sends it to postfix expression in proper order and returns answer
