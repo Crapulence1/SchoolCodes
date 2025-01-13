@@ -24,7 +24,6 @@ public class InfixToPost {
 
         }
     }
-    //3 + ( 2 * ( 4 * 2 ) - 5 ) + 2 / 7
     public static String[] InfixConvert(String[] input) throws Exception {
         Lookup table = new Lookup();
         AStack stack = new AStack(input.length);
@@ -33,7 +32,7 @@ public class InfixToPost {
         int ansCount = 0;
         for(String token : input) {
             if(!isNum(token)){
-                if(table.looksLike(token)==expected){ //( 1 + 2 )
+                if(table.looksLike(token)==expected){
                     if(!token.equals(")")) {
                         expected = (expected == 'R' || token.equals("(")) ? 'D' : 'R'; //Swaps the expected token
                     }
