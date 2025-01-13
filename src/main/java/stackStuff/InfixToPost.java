@@ -13,22 +13,14 @@ public class InfixToPost {
             print(answer);
             System.out.println(eval);
         }
-        catch(ArithmeticException e){
-            System.out.println("Failed: Divided by zero");
-            print(input);
-        }
-        catch (NullPointerException e){
+        catch (NullPointerException e){ //catches if we have incorrect number of parentheses
             System.out.println("Failed: Incorrect number of parentheses");
             print(input);
         }
-        catch(NumberFormatException e){
-            System.out.println("Failed: Improper formatting");
-            print(input);
-        }
-        catch(Exception e){
-            System.out.println("Failed: Negative base with exponentiation");
-            print(input);
+        catch(Exception e){ //catches every other error and displays their message
+            System.out.print("Failed: ");
             System.out.println(e.getMessage());
+            print(input);
 
         }
     }
@@ -57,7 +49,7 @@ public class InfixToPost {
                         stack.push(token);
                     }
                 } else {
-                    throw new NumberFormatException(token);
+                    throw new Exception("Improper formatting at " + token);
                 }
             } else {
                 expected = (expected == 'R' || token.equals("(")) ? 'D' : 'R'; //Swaps the expected token

@@ -31,13 +31,13 @@ public class PostfixEval {
                 case "/":
                     a = (double) stack.pop();
                     b = (double) stack.pop();
-                    if (a == 0) throw new ArithmeticException("Division by zero");
+                    if (a == 0) throw new Exception("Division by zero"); //if we divide by zero
                     stack.push(b / a);
                     break;
                 case "^":
                     a = (double) stack.pop();
                     b = (double) stack.pop();
-                    if(b < 0) throw new Exception();
+                    if(b < 0) throw new Exception("Exponentiation with a negative base"); // if the base is negative throw exception
                     stack.push(Math.pow(b, a));
                     break;
                 default:
