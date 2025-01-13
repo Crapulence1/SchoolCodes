@@ -1,6 +1,4 @@
 package stackStuff;
-
-import java.util.Arrays;
 import java.util.Scanner;
 import static stackStuff.PostfixEval.postfix;
 public class InfixToPost {
@@ -21,17 +19,16 @@ public class InfixToPost {
             System.out.print("Failed: ");
             System.out.println(e.getMessage());
             print(input);
-
         }
     }
     public static String[] InfixConvert(String[] input) throws Exception {
-        Lookup table = new Lookup();
-        AStack stack = new AStack(input.length);
-        String[] ans = new String[input.length];
-        char expected = 'D';
-        int ansCount = 0;
+        Lookup table = new Lookup();                //creates the lookup table
+        AStack stack = new AStack(input.length);    //creates the operator stack
+        String[] ans = new String[input.length];    //our final answer
+        char expected = 'D';                    //checks if the current token is operand - 'D' or operator - 'R'
+        int ansCount = 0;               //tracks the current index of what we put into the answer
         for(String token : input) {
-            if(!isNum(token)){
+            if(!isNum(token)){//checks if the current token is a number
                 if(table.looksLike(token)==expected){
                     if(!token.equals(")")) {
                         expected = (expected == 'R' || token.equals("(")) ? 'D' : 'R'; //Swaps the expected token
@@ -56,7 +53,7 @@ public class InfixToPost {
             }
         }
         while (!stack.isEmpty()){//flushes the stack once we reach the end of the loop
-            if(table.isOutputable((String) stack.peek())) { //checks if the top of the sta k is outputable
+            if(table.isOutputable((String) stack.peek())) { //checks if the top of the sta k is output able
                 ans[ansCount++] = (String) stack.pop(); //adds it to the answer if it is
             } else {
 
@@ -70,16 +67,15 @@ public class InfixToPost {
 
     public static boolean isNum(String check){ //checks if the current element is a number
         try{
-            int x = Integer.parseInt(check);
-            if(check.equals("(") || check.equals(")")) return false;
-            return true;
+            int x = Integer.parseInt(check);    //tries to parse into an integer
+            return !check.equals("(") && !check.equals(")");
         }
         catch (Exception e){
             return false;
         }
     }
 
-    public static void print(String[] input){
+    public static void print(String[] input){ //prints the answer as an expression instead of an array
         for(int i = 0; i < input.length && input[i] != null; i++){
             System.out.print(input[i] + " ");
         }

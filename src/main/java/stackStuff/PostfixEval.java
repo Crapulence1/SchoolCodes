@@ -6,7 +6,6 @@ public class PostfixEval {
         String[] input = in.nextLine().split(" ");
         System.out.println(postfix(input));
     }
-//3 + ( 2 * ( 4 * 2 ) - 5 ) + 2 / 7
     public static double postfix(String[] input) throws Exception{
         AStack stack = new AStack(input.length);
         double a;
