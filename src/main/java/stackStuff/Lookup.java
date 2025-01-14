@@ -32,8 +32,7 @@ public class Lookup {
     public char expects(String token){
         return switch (token) {
             case "+", "-", "*", "/", "^", "(" -> 'D';
-            case ")" -> 'R';
-            default -> throw new IllegalStateException("Unexpected value: " + token);
+            default -> 'R';
         };
     }
     public boolean isOutputable(String token){

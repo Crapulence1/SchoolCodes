@@ -7,7 +7,7 @@ public class InfixToPost {
         String[] input = in.nextLine().split(" ");
         try {
             String[] answer = InfixConvert(input);
-            double eval = postfix(answer);
+            double eval = postfix(trim(answer));
             print(answer);
             System.out.println(eval);
         }
@@ -31,7 +31,7 @@ public class InfixToPost {
             if(!isNum(token)){//checks if the current token is a number
                 if(table.looksLike(token)==expected){
                     if(!token.equals(")")) {
-                        expected = (expected == 'R' || token.equals("(")) ? 'D' : 'R'; //Swaps the expected token
+                        expected = table.expects(token); //Swaps the expected token
                     }
                     if(token.equals(")")) {
                         while (!stack.peek().equals("(")) {
@@ -48,7 +48,7 @@ public class InfixToPost {
                     throw new Exception("Improper formatting at " + token);
                 }
             } else {
-                expected = (expected == 'R' || token.equals("(")) ? 'D' : 'R'; //Swaps the expected token
+                expected = table.expects(token); //Swaps the expected token
                 ans[ansCount++] = token; //adds the current token to the answer
             }
         }
@@ -73,6 +73,16 @@ public class InfixToPost {
         catch (Exception e){
             return false;
         }
+    }
+
+    public static String[] trim(String[] input){
+        int i = 0;
+        for(String datum: input){
+            if (datum!=null) i++;
+        }
+        String[] answer = new String[i];
+        System.arraycopy(input, 0, answer, 0, answer.length);
+        return answer;
     }
 
     public static void print(String[] input){ //prints the answer as an expression instead of an array
