@@ -1,29 +1,27 @@
-package stackStuff;
-import java.util.Scanner;
-import static stackStuff.PostfixEval.postfix;
+package stackStuff.Expressions;
+import static stackStuff.Expressions.PostfixEval.postfix;
 public class InfixToPost {
     public static void main(String[] args) throws Exception {
-        Scanner in = new Scanner(System.in);
-        String[] input = in.nextLine().split(" ");
-        try {
-            String[] answer = InfixConvert(input);
-            double eval = postfix(trim(answer));
-            print(answer);
-            System.out.println(eval);
-        }
-        catch (NullPointerException e){ //catches if we have incorrect number of parentheses
-            System.out.println("Failed: Incorrect number of parentheses");
-            print(input);
-        }
-        catch(Exception e){ //catches every other error and displays their message
-            System.out.print("Failed: ");
-            System.out.println(e.getMessage());
-            print(input);
+        for (String expression : args) {
+            String[] input = expression.split(" ");
+            try {
+                String[] answer = InfixConvert(input);
+                double eval = postfix(trim(answer));
+                print(answer);
+                System.out.println(eval);
+            } catch (NullPointerException e) { //catches if we have incorrect number of parentheses
+                System.out.println("Failed: Incorrect number of parentheses");
+                print(input);
+            } catch (Exception e) { //catches every other error and displays their message
+                System.out.print("Failed: ");
+                System.out.println(e.getMessage());
+                print(input);
+            }
         }
     }
     public static String[] InfixConvert(String[] input) throws Exception {
         Lookup table = new Lookup();                //creates the lookup table
-        AStack stack = new AStack(input.length);    //creates the operator stack
+        InStack stack = new InStack(input.length);    //creates the operator stack
         String[] ans = new String[input.length];    //our final answer
         char expected = 'D';                    //checks if the current token is operand - 'D' or operator - 'R'
         int ansCount = 0;               //tracks the current index of what we put into the answer
@@ -53,8 +51,8 @@ public class InfixToPost {
             }
         }
         while (!stack.isEmpty()){//flushes the stack once we reach the end of the loop
-            if(table.isOutputable((String) stack.peek())) { //checks if the top of the sta k is output able
-                ans[ansCount++] = (String) stack.pop(); //adds it to the answer if it is
+            if(table.isOutputable(stack.peek())) { //checks if the top of the sta k is output able
+                ans[ansCount++] = stack.pop(); //adds it to the answer if it is
             } else {
 
                 if(stack.pop().equals("(")){ //if we have to many open parentheses throw error, else just pop
@@ -67,7 +65,7 @@ public class InfixToPost {
 
     public static boolean isNum(String check){ //checks if the current element is a number
         try{
-            int x = Integer.parseInt(check);    //tries to parse into an integer
+            double x = Double.parseDouble(check);    //tries to parse into an integer
             return !check.equals("(") && !check.equals(")");
         }
         catch (Exception e){

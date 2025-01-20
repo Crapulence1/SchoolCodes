@@ -1,4 +1,4 @@
-package stackStuff;
+package stackStuff.Expressions;
 import java.util.Scanner;
 public class PostfixEval {
     public static void main(String [] args) throws Exception {
@@ -7,7 +7,7 @@ public class PostfixEval {
         System.out.println(postfix(input));
     }
     public static double postfix(String[] input) throws Exception{
-        AStack stack = new AStack(input.length);
+        PostStack stack = new PostStack(input.length);
         double a;
         double b;
         for (String token : input) {

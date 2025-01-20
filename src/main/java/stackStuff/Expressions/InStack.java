@@ -1,16 +1,16 @@
-package stackStuff;
+package stackStuff.Expressions;
 
-public class AStack {
+public class InStack {
         private int top = -1;
-        private Object[] num;
-         public AStack(int size) {
-            this.num = new Object[size / 2 + 1];
+        private String[] num;
+         public InStack(int size) {
+            this.num = new String[size / 2 + 1];
         }
-        public void push(Object a) {
+        public void push(String a) {
             top++;
             num[top] = a;
         }
-        public Object pop() {
+        public String pop() {
             if (isEmpty()) {
                 throw new IllegalStateException("Stack underflow");
             }
@@ -19,7 +19,7 @@ public class AStack {
         public boolean isEmpty() {
             return top == -1;
         }
-        public Object peek() {
+        public String peek() {
             try {
                 return num[top];
             }
@@ -31,8 +31,8 @@ public class AStack {
             return top;
         }
         public void print() {
-            for (Object Object : num){
-                System.out.print(Object + " ");
+            for (String String : num){
+                System.out.print(String + " ");
             }
             System.out.println();
         }

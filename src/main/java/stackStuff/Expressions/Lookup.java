@@ -1,4 +1,4 @@
-package stackStuff;
+package stackStuff.Expressions;
 
 public class Lookup {
     public int getIn(String token){
@@ -8,7 +8,7 @@ public class Lookup {
             case "^" -> 6;
             case "(" -> 10;
             case ")" -> 0;
-            default -> throw new IllegalStateException("Unexpected value: " + token);
+            default -> 0;
         };
     }
     public int getStack(String token){
@@ -25,8 +25,7 @@ public class Lookup {
     public char looksLike(String token){
         return switch (token) {
             case "+", "-", "*", "/", "^", ")" -> 'R';
-            case "(" -> 'D';
-            default -> throw new IllegalStateException("Unexpected value: " + token);
+            default -> 'D';
         };
     }
     public char expects(String token){
